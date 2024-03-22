@@ -1,1 +1,51 @@
 Same test https://github.com/nettigj/Testing/blob/main/First%20automatization%20test, better execution
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+import time
+
+def my_wait():
+    time.sleep(2)
+
+class TestWebPage:
+    driver = webdriver.Chrome()
+
+    def test_setup(self, webpage):
+        self.driver.get(webpage)
+        my_wait()
+        
+
+    def test_login(self, login_name, password):
+        self.driver.find_element(By.ID,"user-name").send_keys(login_name)
+        my_wait()
+        self.driver.find_element(By.ID,"password").send_keys(password)
+        my_wait()
+        self.driver.find_element(By.ID,"login-button").click()
+        my_wait()
+
+    def test_product(self, product):
+        self.driver.find_element(By.ID,product).click() 
+        my_wait()
+
+    def test_cart(self):
+         self.driver.find_element(By.ID,"shopping_cart_container").click()
+         my_wait()
+
+    def test_continue_button(self):
+        self.driver.find_element(By.ID,"continue-shopping").click() 
+        my_wait()
+
+    def test_teardown(self):
+        self.driver.close()
+        self.driver.quit()
+
+    
+
+web_page = TestWebPage () 
+web_page.test_setup("https://www.saucedemo.com/")
+web_page.test_login ("standard_user", "secret_sauce")
+web_page.test_product("add-to-cart-sauce-labs-backpack")
+web_page.test_cart()
+web_page.test_continue_button()
+web_page.test_teardown()
